@@ -1,5 +1,7 @@
 # Trading Panel (MT5 Expert Advisor) Version 1.0
 
+![Dashboard](Laxarr_Risk_Manager.png)
+
 A **risk management tool** for MetaTrader 5 — an on-chart order-entry
 panel built around risk-based position sizing, account guardrails, and
 live SL/TP/Entry chart visualization, rather than an autonomous trading
