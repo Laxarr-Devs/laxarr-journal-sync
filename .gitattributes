@@ -1,0 +1,6 @@
+# MQL5 source files are edited on Mac but compiled/run in MetaEditor on
+# Windows, which expects CRLF line endings. Normalize them explicitly so
+# Git doesn't warn about LF/CRLF conversion on every touch.
+*.mq5 text eol=crlf
+*.mqh text eol=crlf
+*.mq4 text eol=crlf
