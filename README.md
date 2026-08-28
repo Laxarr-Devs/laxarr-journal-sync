@@ -1,4 +1,4 @@
-# Trading Panel (MT5 Expert Advisor)
+# Trading Panel (MT5 Expert Advisor) Version 1.0
 
 A **risk management tool** for MetaTrader 5 — an on-chart order-entry
 panel built around risk-based position sizing, account guardrails, and
@@ -21,6 +21,7 @@ that guardrail.
 ## File overview
 
 ### `TradingPanel.mq5`
+
 The EA's entry point. Declares the `CTradingPanelDialog` class (member
 variables, control declarations, and small inline handlers), wires up
 MT5's `OnInit`/`OnDeinit`/`OnTick`/`OnTimer`/`OnTradeTransaction`/
@@ -29,6 +30,7 @@ Also holds layout constants for the shared dialog chrome and the four
 order-type panels.
 
 ### `OrderPanelBase.mqh`
+
 The base class shared by all four order-type panels. Builds the SL/TP1/
 TP2/TP3 rows (price, pips, money, risk:reward, and per-TP lot columns, all
 editable and spinner-adjustable), keeps those fields in sync with each
@@ -38,24 +40,29 @@ default — TP1 hosts a button that reveals TP2, and TP2 hosts one that
 reveals TP3.
 
 ### `MarketExecutionPanel.mqh`
+
 The Market order tab. Uses the live bid/ask as its reference price and is
 the only tab currently wired to place real trades, via `CTrade`. Each
 enabled take-profit level is submitted as its own independent position,
 sharing the same stop loss.
 
 ### `LimitOrderPanel.mqh`
+
 The Limit order tab. Adds a "Limit Price" field that seeds the reference
 price for SL/TP calculations and the chart visualization.
 
 ### `StopOrderPanel.mqh`
+
 The Stop order tab. Adds a "Stop Price" field that seeds the reference
 price for SL/TP calculations and the chart visualization.
 
 ### `StopLimitOrderPanel.mqh`
+
 The Stop Limit order tab. Adds both "Stop Price" and "Limit Price"
 fields; the stop price serves as the reference price.
 
 ### `TradingPanelUI.mqh`
+
 Everything about building and reflowing the shared chrome: the full panel
 construction (`CreatePanel`), BUY/SELL tab styling, order-type and symbol
 dropdown population, the collapse/expand and reflow logic that resizes the
@@ -63,6 +70,7 @@ window to match whichever rows are currently visible, the price readout,
 and periodic layout self-healing.
 
 ### `TradingPanelVolumeRisk.mqh`
+
 The hands-free position-sizing engine. Volume is always computed to match
 exactly what the trader's Max Risk % implies for the active panel's
 current stop-loss distance (or, in fixed-lot mode, Risk % becomes the
@@ -71,6 +79,7 @@ which engages on a manual edit and releases after a trade executes or on
 an explicit unlock click.
 
 ### `TradingPanelGuardrails.mqh`
+
 Account-wide risk guardrails: a maximum daily loss check (enforced every
 tick, independent of the Execute button), a consecutive-loss cooldown, a
 pre-Execute blocking check that combines all configured limits, and the
@@ -78,6 +87,7 @@ Execute click flow itself — a trade confirmation dialog followed by
 guardrail/lock bookkeeping.
 
 ### `TradingPanelRiskSync.mqh`
+
 Fetches the trader's configured risk parameters (risk per trade, fixed lot
 settings, daily loss limit, max open positions, minimum risk:reward, and
 consecutive-loss limit) and renders them as a three-card summary on the
@@ -85,12 +95,14 @@ panel. Also cross-checks the account's currency and broker timezone, and
 emits a periodic "still alive" heartbeat log line.
 
 ### `TradingPanelTradeSync.mqh`
+
 Tracks and reports closed trades. Persists a watermark so only trades
 closed since the last sync are sent, back-fills a bounded window of
 history on first run, and estimates per-lot commission from the most
 recently closed trade for the on-screen cost readout.
 
 ### `TradingPanelTradeReport.mqh`
+
 Two related reporting features: building OHLCV candle context around each
 closed trade's holding period, and capturing a closed position's full
 order/deal lifecycle the moment it closes, queued and retried safely in
